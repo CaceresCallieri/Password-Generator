@@ -11,7 +11,7 @@ function triggerHackerEffect(text: string): string | void{
 	const intervalTime = 200 / text.length // Normalized time so that the effect is the same for all texts, no matter the length
 
 	interval = setInterval(() => {
-		chars = chars.map((char, index) => {
+		chars = chars.map((_, index) => {
 			if (index < iterations) {
 				return text[index]
 			}

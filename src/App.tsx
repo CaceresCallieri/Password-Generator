@@ -1,5 +1,5 @@
 import './App.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 import PasswordContainer from './components/PasswordContainer'
 import CharacterLengthContainer from './components/CharacterLengthContainer'
@@ -19,12 +19,12 @@ const App = () => {
   const [numbersValue, setNumbersValue] = useState<boolean>(true)
   const [symbolsValue, setSymbolsValue] = useState<boolean>(true)
 
-  const checkBoxValues = {
+  const checkBoxValues = useMemo(() => ({
     "uppercase": uppercaseValue,
     "lowercase": lowercaseValue,
     "numbers": numbersValue,
     "symbols": symbolsValue
-  }
+  }), [uppercaseValue, lowercaseValue, numbersValue, symbolsValue])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
