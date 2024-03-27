@@ -1,0 +1,554 @@
+$red: hsl(0, 90%, 63%);
+$orange: hsl(13, 96%, 67%);
+$yellow: hsl(42, 91%, 69%);
+$neon-green: hsl(127, 100%, 82%);
+$almost-white: hsl(252, 11%, 91%);
+$grey: hsl(252, 9%, 53%);
+$dark-grey: hsl(247, 11%, 15%);
+$very-dark-grey: hsl(248, 15%, 11%);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.letter {
+  position: absolute;
+  pointer-events: none;
+  top: -20px;
+  color: $neon-green;
+  z-index: 1;
+  opacity: 0.5;
+  transition: 1s;
+}
+
+#root {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+  height: 100svh;
+
+  display: grid;
+  place-items: center;
+  background-color: $very-dark-grey;
+  color: $almost-white;
+
+
+  main {
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    z-index: 2;
+
+    h1 {
+      text-align: center;
+      color: $grey;
+      font-size: 1.5rem;
+    }
+
+    .password {
+      background-color: $dark-grey;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+
+      .placeholder {
+        color: $grey;
+      }
+
+      .error {
+        color: $red;
+        opacity: 0.3;
+        font-size: 0.85rem;
+        word-break: normal;
+      }
+
+      .clipboard-container {
+        display: flex;
+        align-items: center;
+
+        p {
+          color: $neon-green;
+          font-size: 0.75rem;
+          margin-right: 0.5rem;
+        }
+
+        button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0.25rem;
+
+          transition-property: transform;
+          transition: 0.2s ease-in;
+
+          svg {
+            path {
+              transition: fill 0.2s ease-in;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  section {
+    background-color: $dark-grey;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .character-length {
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: fit-content;
+        margin-bottom: 1rem;
+
+        label {
+          margin: 0;
+        }
+
+        p {
+          color: $neon-green;
+          font-size: 1.25rem;
+        }
+      }
+
+      input[type="range"] {
+        margin-bottom: 1rem;
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: $very-dark-grey;
+
+        display: flex;
+        align-items: center;
+
+        &::-webkit-slider-runnable-track {
+          height: 8px;
+          background: linear-gradient(to right, $neon-green var(--thumb-percentage), $very-dark-grey var(--thumb-percentage));
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          background-color: $almost-white;
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          cursor: pointer;
+
+          margin-top: -6px; // Center the thumb in relation to the track
+
+          transition-property: background-color, outline;
+          transition: 0.2s ease-in;
+        }
+      }
+    }
+
+    .checkboxes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+
+      .checkbox {
+        display: flex;
+        position: relative;
+
+        padding-left: 2rem;
+        cursor: pointer;
+
+        input[type="checkbox"] {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 18px;
+          width: 18px;
+          background-color: transparent;
+          outline: 2px solid $almost-white;
+
+          transition-property: background-color, outline;
+          transition: 0.2s ease-in;
+        }
+
+        input:checked~.checkmark {
+          background-color: $neon-green;
+          outline: 2px solid $neon-green;
+        }
+
+        .checkmark:after {
+          content: url("./icon-check.svg");
+          position: absolute;
+          right: 1px;
+          top: -1 px;
+          display: none;
+        }
+
+        input:checked~.checkmark:after {
+          display: block;
+        }
+      }
+    }
+
+    .strength-indicator-container {
+      background-color: $very-dark-grey;
+      padding: 1rem;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        color: $grey;
+      }
+
+      .strength-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .bars {
+          margin-left: 0.75rem;
+          display: flex;
+          gap: 0.5rem;
+
+          .bar {
+            height: 22px;
+            width: 6px;
+            background-color: $grey;
+          }
+
+          &.strong {
+            .bar {
+              background-color: $neon-green;
+              outline: 2px solid $neon-green;
+            }
+          }
+
+          &.medium {
+
+            .bar:nth-child(1),
+            .bar:nth-child(2),
+            .bar:nth-child(3) {
+              background-color: $yellow;
+              outline: 2px solid $yellow;
+            }
+
+            .bar:nth-child(4) {
+              background-color: transparent;
+              outline: 2px solid $almost-white;
+            }
+          }
+
+          &.weak {
+
+            .bar:nth-child(1),
+            .bar:nth-child(2) {
+              background-color: $orange;
+              outline: 2px solid $orange;
+            }
+
+            .bar:nth-child(3),
+            .bar:nth-child(4) {
+              background-color: transparent;
+              outline: 2px solid $almost-white;
+            }
+          }
+
+          &.too-weak {
+            .bar {
+              background-color: $red;
+              outline: 2px solid $red;
+            }
+
+            .bar:nth-child(2),
+            .bar:nth-child(3),
+            .bar:nth-child(4) {
+              background-color: transparent;
+              outline: 2px solid $almost-white;
+            }
+          }
+        }
+      }
+    }
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+      background-color: $neon-green;
+      border: none;
+      color: $dark-grey;
+      cursor: pointer;
+      padding: 1rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+
+      transition-property: background-color, color, outline;
+      transition: 0.2s ease-in;
+
+      svg {
+        margin-left: 1rem;
+
+        transition: margin-left 0.2s ease-in;
+
+        path {
+          transition: fill 0.2s ease-in;
+        }
+      }
+
+      &:active {
+        outline: 2px solid $almost-white;
+        color: $almost-white;
+
+        svg {
+          margin-left: 1rem;
+
+          path {
+            fill: $almost-white;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Hover states for desktop
+@media (width > 800px) {
+  #root {
+    main {
+      .password {
+        .clipboard-container {
+          button {
+            &:hover {
+              transform: scale(1.1);
+
+              svg {
+                path {
+                  fill: $almost-white;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      section {
+        .character-length {
+          input[type="range"] {
+            &::-webkit-slider-thumb {
+              &:hover {
+                background-color: $very-dark-grey;
+                outline: 2px solid $neon-green;
+
+                + ::-webkit-slider-runnable-track {
+                  background-size: var(--thumb-percentage) 100%, 100% 100%;
+                }
+              }
+            }
+          }
+        }
+
+        .checkboxes-container {
+          .checkbox {
+            .checkmark {
+              &:hover {
+                outline: 2px solid $neon-green;
+              }
+            }
+          }
+        }
+
+        button {
+          &:hover {
+            background-color: transparent;
+            color: $neon-green;
+            outline: 2px solid $neon-green;
+
+            svg {
+              margin-left: 1.5rem;
+
+              path {
+                fill: $neon-green;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// MEDIUM MOBILE / SMALL TABLET
+@media (width < 580px) {
+  body {
+    overflow: hidden;
+    overflow-x: hidden;
+  }
+
+  #root {
+    overflow: hidden;
+    overflow-x: hidden;
+
+    width: 100vw;
+
+    main {
+      width: 95vw;
+      padding: 1rem;
+    }
+  }
+}
+
+
+// SMALL MOBILE
+@media (width < 380px) {
+  #root {
+    main {
+      .password {
+        min-width: 100%;
+        max-width: 100%;
+
+        >p {
+          font-size: 0.9rem;
+          word-break: break-all;
+        }
+
+        .clipboard-container {
+          margin-left: 3rem;
+        }
+      }
+
+      section {
+        .character-length {
+          div {
+            label {
+              font-size: 0.9em;
+            }
+          }
+        }
+
+        .checkboxes-container {
+          label.checkbox {
+            font-size: 0.85em;
+          }
+        }
+
+        .strength-indicator-container {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}
+
+
+// Active states for touch devices
+@media (width < 800px) {
+  #root {
+    main {
+      .password {
+        .clipboard-container {
+          button {
+            &:active {
+              transform: scale(1.1);
+
+              svg {
+                path {
+                  fill: $almost-white;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      section {
+        .character-length {
+          input[type="range"] {
+            &::-webkit-slider-thumb {
+              &:active {
+                background-color: $very-dark-grey;
+                outline: 2px solid $neon-green;
+
+                + ::-webkit-slider-runnable-track {
+                  background-size: var(--thumb-percentage) 100%, 100% 100%;
+                }
+              }
+            }
+          }
+        }
+
+        .checkboxes-container {
+          .checkbox {
+            .checkmark {
+              &:active {
+                outline: 2px solid $neon-green;
+              }
+            }
+          }
+        }
+
+        .strength-indicator-container {
+          .strength-indicator {
+            .bars {
+              .bar {
+                &:active {
+                  background-color: $grey;
+                  outline: 2px solid $grey;
+                }
+              }
+            }
+          }
+        }
+
+        button {
+          &:active {
+            background-color: transparent;
+            color: $neon-green;
+            outline: 2px solid $neon-green;
+
+            svg {
+              margin-left: 1.5rem;
+
+              path {
+                fill: $neon-green;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes drop {
+  0% {}
+
+  100% {
+    top: 100vh;
+  }
+}

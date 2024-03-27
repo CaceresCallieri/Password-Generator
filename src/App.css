@@ -1,0 +1,367 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.letter {
+  position: absolute;
+  pointer-events: none;
+  top: -20px;
+  color: hsl(127, 100%, 82%);
+  z-index: 1;
+  opacity: 0.5;
+  transition: 1s;
+}
+
+#root {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  background-color: hsl(248, 15%, 11%);
+  color: hsl(252, 11%, 91%);
+}
+#root main {
+  width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 2;
+}
+#root main h1 {
+  text-align: center;
+  color: hsl(252, 9%, 53%);
+  font-size: 1.5rem;
+}
+#root main .password {
+  background-color: hsl(247, 11%, 15%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+#root main .password .placeholder {
+  color: hsl(252, 9%, 53%);
+}
+#root main .password .error {
+  color: hsl(0, 90%, 63%);
+  opacity: 0.3;
+  font-size: 0.85rem;
+  word-break: normal;
+}
+#root main .password .clipboard-container {
+  display: flex;
+  align-items: center;
+}
+#root main .password .clipboard-container p {
+  color: hsl(127, 100%, 82%);
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+}
+#root main .password .clipboard-container button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition-property: transform;
+  transition: 0.2s ease-in;
+}
+#root main .password .clipboard-container button svg path {
+  transition: fill 0.2s ease-in;
+}
+#root section {
+  background-color: hsl(247, 11%, 15%);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#root section .character-length div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-bottom: 1rem;
+}
+#root section .character-length div label {
+  margin: 0;
+}
+#root section .character-length div p {
+  color: hsl(127, 100%, 82%);
+  font-size: 1.25rem;
+}
+#root section .character-length input[type=range] {
+  margin-bottom: 1rem;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  background-color: hsl(248, 15%, 11%);
+  display: flex;
+  align-items: center;
+}
+#root section .character-length input[type=range]::-webkit-slider-runnable-track {
+  height: 8px;
+  background: linear-gradient(to right, hsl(127, 100%, 82%) var(--thumb-percentage), hsl(248, 15%, 11%) var(--thumb-percentage));
+}
+#root section .character-length input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: hsl(252, 11%, 91%);
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -6px;
+  -webkit-transition-property: background-color, outline;
+  transition-property: background-color, outline;
+  -webkit-transition: 0.2s ease-in;
+  transition: 0.2s ease-in;
+}
+#root section .checkboxes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+#root section .checkboxes-container .checkbox {
+  display: flex;
+  position: relative;
+  padding-left: 2rem;
+  cursor: pointer;
+}
+#root section .checkboxes-container .checkbox input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+#root section .checkboxes-container .checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  outline: 2px solid hsl(252, 11%, 91%);
+  transition-property: background-color, outline;
+  transition: 0.2s ease-in;
+}
+#root section .checkboxes-container .checkbox input:checked ~ .checkmark {
+  background-color: hsl(127, 100%, 82%);
+  outline: 2px solid hsl(127, 100%, 82%);
+}
+#root section .checkboxes-container .checkbox .checkmark:after {
+  content: url("./icon-check.svg");
+  position: absolute;
+  right: 1px;
+  top: -1 px;
+  display: none;
+}
+#root section .checkboxes-container .checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+#root section .strength-indicator-container {
+  background-color: hsl(248, 15%, 11%);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#root section .strength-indicator-container span {
+  color: hsl(252, 9%, 53%);
+}
+#root section .strength-indicator-container .strength-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#root section .strength-indicator-container .strength-indicator .bars {
+  margin-left: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+#root section .strength-indicator-container .strength-indicator .bars .bar {
+  height: 22px;
+  width: 6px;
+  background-color: hsl(252, 9%, 53%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.strong .bar {
+  background-color: hsl(127, 100%, 82%);
+  outline: 2px solid hsl(127, 100%, 82%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.medium .bar:nth-child(1),
+#root section .strength-indicator-container .strength-indicator .bars.medium .bar:nth-child(2),
+#root section .strength-indicator-container .strength-indicator .bars.medium .bar:nth-child(3) {
+  background-color: hsl(42, 91%, 69%);
+  outline: 2px solid hsl(42, 91%, 69%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.medium .bar:nth-child(4) {
+  background-color: transparent;
+  outline: 2px solid hsl(252, 11%, 91%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.weak .bar:nth-child(1),
+#root section .strength-indicator-container .strength-indicator .bars.weak .bar:nth-child(2) {
+  background-color: hsl(13, 96%, 67%);
+  outline: 2px solid hsl(13, 96%, 67%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.weak .bar:nth-child(3),
+#root section .strength-indicator-container .strength-indicator .bars.weak .bar:nth-child(4) {
+  background-color: transparent;
+  outline: 2px solid hsl(252, 11%, 91%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.too-weak .bar {
+  background-color: hsl(0, 90%, 63%);
+  outline: 2px solid hsl(0, 90%, 63%);
+}
+#root section .strength-indicator-container .strength-indicator .bars.too-weak .bar:nth-child(2),
+#root section .strength-indicator-container .strength-indicator .bars.too-weak .bar:nth-child(3),
+#root section .strength-indicator-container .strength-indicator .bars.too-weak .bar:nth-child(4) {
+  background-color: transparent;
+  outline: 2px solid hsl(252, 11%, 91%);
+}
+#root section button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: hsl(127, 100%, 82%);
+  border: none;
+  color: hsl(247, 11%, 15%);
+  cursor: pointer;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition-property: background-color, color, outline;
+  transition: 0.2s ease-in;
+}
+#root section button svg {
+  margin-left: 1rem;
+  transition: margin-left 0.2s ease-in;
+}
+#root section button svg path {
+  transition: fill 0.2s ease-in;
+}
+#root section button:active {
+  outline: 2px solid hsl(252, 11%, 91%);
+  color: hsl(252, 11%, 91%);
+}
+#root section button:active svg {
+  margin-left: 1rem;
+}
+#root section button:active svg path {
+  fill: hsl(252, 11%, 91%);
+}
+
+@media (width > 800px) {
+  #root main .password .clipboard-container button:hover {
+    transform: scale(1.1);
+  }
+  #root main .password .clipboard-container button:hover svg path {
+    fill: hsl(252, 11%, 91%);
+  }
+  #root main section .character-length input[type=range]::-webkit-slider-thumb:hover {
+    background-color: hsl(248, 15%, 11%);
+    outline: 2px solid hsl(127, 100%, 82%);
+  }
+  #root main section .character-length input[type=range]::-webkit-slider-thumb:hover + ::-webkit-slider-runnable-track {
+    background-size: var(--thumb-percentage) 100%, 100% 100%;
+  }
+  #root main section .checkboxes-container .checkbox .checkmark:hover {
+    outline: 2px solid hsl(127, 100%, 82%);
+  }
+  #root main section button:hover {
+    background-color: transparent;
+    color: hsl(127, 100%, 82%);
+    outline: 2px solid hsl(127, 100%, 82%);
+  }
+  #root main section button:hover svg {
+    margin-left: 1.5rem;
+  }
+  #root main section button:hover svg path {
+    fill: hsl(127, 100%, 82%);
+  }
+}
+@media (width < 580px) {
+  body {
+    overflow: hidden;
+    overflow-x: hidden;
+  }
+  #root {
+    overflow: hidden;
+    overflow-x: hidden;
+    width: 100vw;
+  }
+  #root main {
+    width: 95vw;
+    padding: 1rem;
+  }
+}
+@media (width < 380px) {
+  #root main .password {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  #root main .password > p {
+    font-size: 0.9rem;
+    word-break: break-all;
+  }
+  #root main .password .clipboard-container {
+    margin-left: 3rem;
+  }
+  #root main section .character-length div label {
+    font-size: 0.9em;
+  }
+  #root main section .checkboxes-container label.checkbox {
+    font-size: 0.85em;
+  }
+  #root main section .strength-indicator-container {
+    font-size: 0.8em;
+  }
+}
+@media (width < 800px) {
+  #root main .password .clipboard-container button:active {
+    transform: scale(1.1);
+  }
+  #root main .password .clipboard-container button:active svg path {
+    fill: hsl(252, 11%, 91%);
+  }
+  #root main section .character-length input[type=range]::-webkit-slider-thumb:active {
+    background-color: hsl(248, 15%, 11%);
+    outline: 2px solid hsl(127, 100%, 82%);
+  }
+  #root main section .character-length input[type=range]::-webkit-slider-thumb:active + ::-webkit-slider-runnable-track {
+    background-size: var(--thumb-percentage) 100%, 100% 100%;
+  }
+  #root main section .checkboxes-container .checkbox .checkmark:active {
+    outline: 2px solid hsl(127, 100%, 82%);
+  }
+  #root main section .strength-indicator-container .strength-indicator .bars .bar:active {
+    background-color: hsl(252, 9%, 53%);
+    outline: 2px solid hsl(252, 9%, 53%);
+  }
+  #root main section button:active {
+    background-color: transparent;
+    color: hsl(127, 100%, 82%);
+    outline: 2px solid hsl(127, 100%, 82%);
+  }
+  #root main section button:active svg {
+    margin-left: 1.5rem;
+  }
+  #root main section button:active svg path {
+    fill: hsl(127, 100%, 82%);
+  }
+}
+@keyframes drop {
+  100% {
+    top: 100vh;
+  }
+}/*# sourceMappingURL=App.css.map */
