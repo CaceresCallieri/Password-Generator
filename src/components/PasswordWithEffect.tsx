@@ -22,7 +22,7 @@ const PasswordWithEffect: FC<PasswordWithEffectProps> = ({ password }) => {
 
         intervalRef.current = window.setInterval(() => {
             setChars((oldChars) => 
-                oldChars.map((char, index) => {
+                oldChars.map((_, index) => {
                     if (index < iterations) {
                         return password[index]
                     }

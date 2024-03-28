@@ -1,5 +1,5 @@
 import { FC } from "react"
-import IconArrowRight from "../assets/IconArrowRight"
+import IconArrowRight from "../assets/SvgIconArrowRight"
 import generatePassword from "../utils/generatePassword"
 
 interface GeneratePasswordButtonProps {
